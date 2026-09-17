@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: task-tracker
+  mvc:
+    apiversion:
+      use:
+        path-segment: 1

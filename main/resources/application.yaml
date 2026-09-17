@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: task-service
+  mvc:
+    apiversion:
+      use:
+        path-segment: 1
