@@ -10,7 +10,7 @@ import io.task.tracker.domain.TaskMetadata
 import io.task.tracker.domain.TaskState
 import org.springframework.stereotype.Component
 import java.time.Clock
-import java.util.UUID
+import java.util.*
 
 private val log = logger<TaskCreator>()
 
@@ -21,21 +21,21 @@ class TaskCreator(
 ) : CreateTaskUseCase {
     override fun createTask(command: CreateTaskCommand): Task {
         log.info("Creating task [title={}]", command.title)
-        val task = mapCommandToTask(command)
+        val task = command.toTask()
         return taskRepository.saveTask(task)
     }
 
-    private fun mapCommandToTask(command: CreateTaskCommand): Task {
-        val taskInfo = TaskInfo(command.title, command.description)
-        val taskState = TaskState(command.priority, command.status, command.progress)
+    private fun CreateTaskCommand.toTask(): Task {
+        val taskInfo = TaskInfo(title, description)
+        val taskState = TaskState(priority, status, progress)
         val createdAt = clock.instant()
-        val taskMetadata = TaskMetadata(command.namespaceId, command.parentId, createdAt, createdAt)
+        val taskMetadata = TaskMetadata(parentId, createdAt, createdAt)
         val task = Task(
             id = UUID.randomUUID(),
             info = taskInfo,
             state = taskState,
-            attachments = command.attachments,
-            subtasks = command.subtasks,
+            attachments = attachments,
+            subtasks = subtasks,
             metadata = taskMetadata
         )
         return task

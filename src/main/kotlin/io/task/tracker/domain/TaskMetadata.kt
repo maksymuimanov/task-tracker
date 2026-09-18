@@ -1,10 +1,9 @@
 package io.task.tracker.domain
 
 import java.time.Instant
-import java.util.UUID
+import java.util.*
 
 data class TaskMetadata(
-    var namespaceId: UUID,
     var parentId: UUID?,
     val createdAt: Instant,
     var updatedAt: Instant

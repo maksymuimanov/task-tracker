@@ -9,7 +9,7 @@ import io.task.tracker.domain.TaskProgress
 import io.task.tracker.domain.TaskStatus
 import org.springframework.stereotype.Component
 import java.time.Clock
-import java.util.UUID
+import java.util.*
 
 private val log = logger<TaskUpdater>()
 
@@ -48,7 +48,6 @@ class TaskUpdater(
 
     private fun updateTaskMetadata(task: Task, command: UpdateTaskCommand) {
         task.metadata.apply {
-            namespaceId = command.namespaceId ?: namespaceId
             parentId = command.parentId ?: parentId
         }
     }

@@ -1,17 +1,9 @@
 package io.task.tracker.adapter.output.sql
 
-import io.task.tracker.adapter.output.sql.entity.NamespaceEntity
 import io.task.tracker.domain.TaskPriority
 import io.task.tracker.domain.TaskStatus
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.OneToMany
-import jakarta.persistence.Table
-import java.util.UUID
+import jakarta.persistence.*
+import java.util.*
 
 @Entity
 @Table(name = "tasks")
@@ -33,8 +25,5 @@ class TaskEntity (
     var subtasks: MutableList<TaskEntity>,
     @ManyToOne
     @JoinColumn(name = "parent_id")
-    var parent: TaskEntity?,
-    @ManyToOne
-    @JoinColumn(name = "namespace_id")
-    var namespace: NamespaceEntity
+    var parent: TaskEntity?
 )

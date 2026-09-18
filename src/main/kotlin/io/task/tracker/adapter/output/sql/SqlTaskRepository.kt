@@ -5,7 +5,7 @@ import io.task.tracker.core.port.output.TaskRepository
 import io.task.tracker.domain.PageInfo
 import io.task.tracker.domain.Task
 import org.springframework.stereotype.Repository
-import java.util.UUID
+import java.util.*
 
 @Repository
 class SqlTaskRepository(
@@ -19,15 +19,12 @@ class SqlTaskRepository(
         TODO("Not yet implemented")
     }
 
-    override fun findAllParentTasksByProjectId(
-        projectId: UUID,
-        pageInfo: PageInfo
-    ): List<Task> {
+    override fun findAllParentTasks(pageInfo: PageInfo): List<Task> {
         TODO("Not yet implemented")
     }
 
-    override fun findAllParentTasksByUserId(
-        userId: UUID,
+    override fun findAllParentTasksByParentId(
+        parentId: UUID?,
         pageInfo: PageInfo
     ): List<Task> {
         TODO("Not yet implemented")

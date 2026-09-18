@@ -1,8 +1,3 @@
-CREATE TABLE namespaces(
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL
-)
-
 CREATE TABLE tasks(
     id TEXT PRIMARY KEY,
     title TEXT NOT NULL,
@@ -11,7 +6,6 @@ CREATE TABLE tasks(
     status TEXT NOT NULL,
     completed INTEGER NOT NULL,
     parent_id TEXT,
-    namespace_id TEXT NOT NULL,
     CONSTRAINT completed_ck CHECK (completed BETWEEN 0 AND 100),
     CONSTRAINT parent_id_fk FOREIGN KEY (parent_id) REFERENCES tasks(id)
 )
