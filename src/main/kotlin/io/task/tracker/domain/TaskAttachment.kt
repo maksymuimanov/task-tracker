@@ -1,16 +1,16 @@
 package io.task.tracker.domain
 
 import java.net.URL
-import java.util.UUID
+import java.util.*
 
 sealed class TaskAttachment(
     open val id: UUID = UUID.randomUUID()
 ) {
-    data class Base64Attachment(
+    data class Base64(
         val content: String
     ) : TaskAttachment()
 
-    data class UrlAttachment(
+    data class Url(
         val url: URL
     ) : TaskAttachment()
 }
