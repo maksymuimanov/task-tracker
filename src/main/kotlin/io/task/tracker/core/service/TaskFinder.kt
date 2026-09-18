@@ -19,11 +19,11 @@ class TaskFinder(
         return taskRepository.findTaskById(id)
     }
 
-    override fun findAllParentTasks(pageInfo: PageInfo): List<Task> {
+    override fun findAllHeadTasks(pageInfo: PageInfo): List<Task> {
         TODO("Not yet implemented")
     }
 
-    override fun findAllParentTasksByParentId(
+    override fun findAllTasksByParentId(
         parentId: UUID,
         pageInfo: PageInfo
     ): List<Task> {

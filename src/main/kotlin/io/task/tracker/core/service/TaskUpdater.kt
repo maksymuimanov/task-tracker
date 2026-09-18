@@ -65,10 +65,12 @@ class TaskUpdater(
     }
 
     private fun updateProgressByStatus(task: Task, status: TaskStatus) {
-        task.state.progress = when (status) {
-            TaskStatus.NOT_STARTED -> TaskProgress(0)
-            TaskStatus.COMPLETED -> TaskProgress(100)
-            else -> task.state.progress
+        task.state.apply {
+            progress = when (status) {
+                TaskStatus.NOT_STARTED -> TaskProgress(0)
+                TaskStatus.COMPLETED -> TaskProgress(100)
+                else -> progress
+            }
         }
     }
 }

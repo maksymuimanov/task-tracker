@@ -7,7 +7,7 @@ import java.util.*
 interface FindTaskUseCase {
     fun findTaskById(id: UUID): Task
 
-    fun findAllParentTasks(pageInfo: PageInfo): List<Task>
+    fun findAllHeadTasks(pageInfo: PageInfo): List<Task>
 
-    fun findAllParentTasksByParentId(parentId: UUID, pageInfo: PageInfo): List<Task>
+    fun findAllTasksByParentId(parentId: UUID, pageInfo: PageInfo): List<Task>
 }

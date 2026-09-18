@@ -7,5 +7,6 @@ import org.springframework.boot.runApplication
 class TaskTrackerApplication
 
 fun main(args: Array<String>) {
-    runApplication<TaskTrackerApplication>(*args)
+    val context = runApplication<TaskTrackerApplication>(*args)
+
 }
