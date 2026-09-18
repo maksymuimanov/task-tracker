@@ -20,13 +20,15 @@ class TaskFinder(
     }
 
     override fun findAllHeadTasks(pageInfo: PageInfo): List<Task> {
-        TODO("Not yet implemented")
+        log.info("Finding all head tasks [page={}, size={}]", pageInfo.page, pageInfo.size)
+        return taskRepository.findAllHeadTasks(pageInfo)
     }
 
     override fun findAllTasksByParentId(
         parentId: UUID,
         pageInfo: PageInfo
     ): List<Task> {
-        TODO("Not yet implemented")
+        log.info("Finding tasks by parent id [parentId={}, page={}, size={}]", parentId, pageInfo.page, pageInfo.size)
+        return taskRepository.findAllTasksByParentId(parentId, pageInfo)
     }
 }
