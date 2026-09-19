@@ -2,6 +2,7 @@ package io.task.tracker.mapper
 
 import io.task.tracker.adapter.input.rest.CreateTaskRequest
 import io.task.tracker.adapter.input.rest.TaskResponse
+import io.task.tracker.adapter.input.rest.UpdateTaskRequest
 import io.task.tracker.adapter.output.mongodb.document.TaskDocument
 import io.task.tracker.core.port.input.CreateTaskCommand
 import io.task.tracker.core.port.input.UpdateTaskCommand
