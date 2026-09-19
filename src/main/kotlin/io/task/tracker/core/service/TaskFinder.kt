@@ -5,6 +5,7 @@ import io.task.tracker.core.port.input.FindTaskUseCase
 import io.task.tracker.core.port.output.TaskRepository
 import io.task.tracker.domain.PageInfo
 import io.task.tracker.domain.Task
+import kotlinx.coroutines.flow.Flow
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -14,12 +15,12 @@ private val log = logger<TaskFinder>()
 class TaskFinder(
     private val taskRepository: TaskRepository
 ) : FindTaskUseCase {
-    override fun findTaskById(id: UUID): Task {
+    override suspend fun findTaskById(id: UUID): Task {
         log.info("Finding task by id [id={}]", id)
         return taskRepository.findTaskById(id)
     }
 
-    override fun findAllHeadTasks(pageInfo: PageInfo): List<Task> {
+    override fun findAllHeadTasks(pageInfo: PageInfo): Flow<Task> {
         log.info("Finding all head tasks [page={}, size={}]", pageInfo.page, pageInfo.size)
         return taskRepository.findAllHeadTasks(pageInfo)
     }
@@ -27,7 +28,7 @@ class TaskFinder(
     override fun findAllTasksByParentId(
         parentId: UUID,
         pageInfo: PageInfo
-    ): List<Task> {
+    ): Flow<Task> {
         log.info("Finding tasks by parent id [parentId={}, page={}, size={}]", parentId, pageInfo.page, pageInfo.size)
         return taskRepository.findAllTasksByParentId(parentId, pageInfo)
     }

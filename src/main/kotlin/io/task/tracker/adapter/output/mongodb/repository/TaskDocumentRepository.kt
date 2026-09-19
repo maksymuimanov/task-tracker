@@ -1,10 +1,12 @@
 package io.task.tracker.adapter.output.mongodb.repository
 
 import io.task.tracker.adapter.output.mongodb.document.TaskDocument
-import org.springframework.data.mongodb.repository.MongoRepository
+import kotlinx.coroutines.flow.Flow
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import java.util.*
 
-interface TaskDocumentRepository : MongoRepository<TaskDocument, UUID> {
-    fun findAllByMetadataParentIdIsNull(): List<TaskDocument>
-    fun findAllByMetadataParentId(parentId: UUID): List<TaskDocument>
+interface TaskDocumentRepository : CoroutineCrudRepository<TaskDocument, UUID> {
+    fun findAllByMetadataParentIdIsNull(): Flow<TaskDocument>
+
+    fun findAllByMetadataParentId(parentId: UUID): Flow<TaskDocument>
 }

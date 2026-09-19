@@ -1,5 +1,7 @@
 package io.task.tracker.mapper
 
+import io.task.tracker.adapter.input.rest.CreateTaskRequest
+import io.task.tracker.adapter.input.rest.TaskResponse
 import io.task.tracker.adapter.output.mongodb.document.TaskDocument
 import io.task.tracker.core.port.input.CreateTaskCommand
 import io.task.tracker.core.port.input.UpdateTaskCommand
@@ -14,6 +16,10 @@ import java.util.*
 
 @Mapper(componentModel = SPRING, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 interface TaskMapper {
+    fun toCreateTaskCommand(request: CreateTaskRequest): CreateTaskCommand
+
+    fun toUpdateTaskCommand(request: UpdateTaskRequest): UpdateTaskCommand
+
     @Mapping(target = "id", source = "id")
     @Mapping(target = "info.title", source = "title")
     @Mapping(target = "info.description", source = "description")
@@ -41,4 +47,6 @@ interface TaskMapper {
     @Mapping(target = "metadata.createdAt", ignore = true)
     @Mapping(target = "metadata.updatedAt", source = "updatedAt")
     fun updateTask(@MappingTarget task: Task, command: UpdateTaskCommand, updatedAt: Instant): Task
+
+    fun toTaskResponse(task: Task): TaskResponse
 }

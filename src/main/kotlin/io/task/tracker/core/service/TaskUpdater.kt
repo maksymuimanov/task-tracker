@@ -19,7 +19,7 @@ class TaskUpdater(
     private val taskRepository: TaskRepository,
     private val clock: Clock
 ) : UpdateTaskUseCase {
-    override fun updateTask(
+    override suspend fun updateTask(
         id: UUID,
         command: UpdateTaskCommand
     ): Task {
@@ -29,7 +29,7 @@ class TaskUpdater(
         return taskRepository.saveTask(task)
     }
 
-    override fun updateTaskStatus(
+    override suspend fun updateTaskStatus(
         id: UUID,
         status: TaskStatus
     ): Task {

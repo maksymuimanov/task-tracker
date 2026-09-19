@@ -2,16 +2,17 @@ package io.task.tracker.core.port.output
 
 import io.task.tracker.domain.PageInfo
 import io.task.tracker.domain.Task
+import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 interface TaskRepository {
-    fun saveTask(task: Task): Task
+    suspend fun saveTask(task: Task): Task
 
-    fun findTaskById(id: UUID): Task
+    suspend fun findTaskById(id: UUID): Task
 
-    fun findAllHeadTasks(pageInfo: PageInfo): List<Task>
+    fun findAllHeadTasks(pageInfo: PageInfo): Flow<Task>
 
-    fun findAllTasksByParentId(parentId: UUID, pageInfo: PageInfo): List<Task>
+    fun findAllTasksByParentId(parentId: UUID, pageInfo: PageInfo): Flow<Task>
 
-    fun deleteTaskById(id: UUID)
+    suspend fun deleteTaskById(id: UUID)
 }

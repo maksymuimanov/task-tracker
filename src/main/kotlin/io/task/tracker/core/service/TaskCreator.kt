@@ -18,7 +18,7 @@ class TaskCreator(
     private val taskRepository: TaskRepository,
     private val clock: Clock
 ) : CreateTaskUseCase {
-    override fun createTask(command: CreateTaskCommand): Task {
+    override suspend fun createTask(command: CreateTaskCommand): Task {
         log.info("Creating task [title={}]", command.title)
         val task = taskMapper.toTask(UUID.randomUUID(), command, clock.instant())
         return taskRepository.saveTask(task)
