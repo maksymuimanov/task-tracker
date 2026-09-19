@@ -6,7 +6,7 @@ import java.util.*
 data class TaskMetadata(
     var parentId: UUID?,
     val createdAt: Instant,
-    var updatedAt: Instant
+    var updatedAt: Instant = createdAt
 ) {
     init {
         require(createdAt <= updatedAt) {

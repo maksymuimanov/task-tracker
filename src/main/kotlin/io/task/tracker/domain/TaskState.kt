@@ -2,6 +2,5 @@ package io.task.tracker.domain
 
 data class TaskState(
     var priority: TaskPriority,
-    var status: TaskStatus,
-    var progress: TaskProgress?
+    var status: TaskStatus
 )
