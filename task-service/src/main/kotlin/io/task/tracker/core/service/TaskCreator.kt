@@ -6,13 +6,11 @@ import io.task.tracker.core.port.input.CreateTaskUseCase
 import io.task.tracker.core.port.output.TaskRepository
 import io.task.tracker.domain.Task
 import io.task.tracker.mapper.TaskMapper
-import org.springframework.stereotype.Component
 import java.time.Clock
 import java.util.*
 
 private val log = logger<TaskCreator>()
 
-@Component
 class TaskCreator(
     private val taskMapper: TaskMapper,
     private val taskRepository: TaskRepository,

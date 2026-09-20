@@ -8,7 +8,7 @@ import java.util.*
 interface FindTaskUseCase {
     suspend fun findTaskById(id: UUID): Task
 
-    fun findAllHeadTasks(pageInfo: PageInfo): Flow<Task>
+    fun findAllHeadTasks(namespaceId: UUID, pageInfo: PageInfo): Flow<Task>
 
     fun findAllTasksByParentId(parentId: UUID, pageInfo: PageInfo): Flow<Task>
 }

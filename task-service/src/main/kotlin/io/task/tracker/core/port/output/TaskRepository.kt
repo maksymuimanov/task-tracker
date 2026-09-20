@@ -8,9 +8,9 @@ import java.util.*
 interface TaskRepository {
     suspend fun saveTask(task: Task): Task
 
-    suspend fun findTaskById(id: UUID): Task
+    suspend fun findTaskById(id: UUID): Task?
 
-    fun findAllHeadTasks(pageInfo: PageInfo): Flow<Task>
+    fun findAllHeadTasks(namespaceId: UUID, pageInfo: PageInfo): Flow<Task>
 
     fun findAllTasksByParentId(parentId: UUID, pageInfo: PageInfo): Flow<Task>
 

@@ -5,7 +5,8 @@ import io.task.tracker.core.service.TaskDeleter
 import io.task.tracker.core.service.TaskFinder
 import io.task.tracker.core.service.TaskUpdater
 import io.task.tracker.domain.PageInfo
-import io.task.tracker.mapper.TaskMapper
+import io.task.tracker.mapper.TaskRequestMapper
+import io.task.tracker.mapper.TaskResponseMapper
 import jakarta.validation.Valid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -17,7 +18,8 @@ import java.util.*
 @RestController
 @RequestMapping("/api/{version}/tasks")
 class TaskController(
-    private val taskMapper: TaskMapper,
+    private val taskRequestMapper: TaskRequestMapper,
+    private val taskResponseMapper: TaskResponseMapper,
     private val taskCreator: TaskCreator,
     private val taskFinder: TaskFinder,
     private val taskUpdater: TaskUpdater,
@@ -27,21 +29,32 @@ class TaskController(
     suspend fun createTask(
         @RequestBody @Valid request: CreateTaskRequest
     ): ResponseEntity<TaskResponse> {
-        val command = taskMapper.toCreateTaskCommand(request)
+        val command = taskRequestMapper.toCreateTaskCommand(request)
         val task = taskCreator.createTask(command)
-        val response = taskMapper.toTaskResponse(task)
+        val response = taskResponseMapper.toTaskResponse(task)
         return ResponseEntity(response, HttpStatus.CREATED)
     }
 
-    @GetMapping(params = ["page", "size", "parentId"])
-    fun findTasks(
+    @GetMapping(params = ["page", "size", "namespaceId"])
+    fun findAllHeadTasks(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") size: Int,
-        @RequestParam(required = false) parentId: UUID?
+        @RequestParam namespaceId: UUID
     ): Flow<TaskResponse> {
         val pageInfo = PageInfo(page, size)
-        return (parentId?.let { taskFinder.findAllTasksByParentId(it, pageInfo) } ?: taskFinder.findAllHeadTasks(pageInfo))
-            .map { taskMapper.toTaskResponse(it) }
+        return taskFinder.findAllHeadTasks(namespaceId, pageInfo)
+            .map { taskResponseMapper.toTaskResponse(it) }
+    }
+
+    @GetMapping(params = ["page", "size", "parentId"])
+    fun findAllTasksByParentId(
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int,
+        @RequestParam namespaceId: UUID
+    ): Flow<TaskResponse> {
+        val pageInfo = PageInfo(page, size)
+        return taskFinder.findAllTasksByParentId(namespaceId, pageInfo)
+            .map { taskResponseMapper.toTaskResponse(it) }
     }
 
     @GetMapping("/{id}")
@@ -49,7 +62,7 @@ class TaskController(
         @PathVariable id: UUID
     ): ResponseEntity<TaskResponse> {
         val task = taskFinder.findTaskById(id)
-        val response = taskMapper.toTaskResponse(task)
+        val response = taskResponseMapper.toTaskResponse(task)
         return ResponseEntity.ok(response)
     }
 
@@ -58,9 +71,9 @@ class TaskController(
         @PathVariable id: UUID,
         @RequestBody @Valid request: UpdateTaskRequest
     ): ResponseEntity<TaskResponse> {
-        val command = taskMapper.toUpdateTaskCommand(request)
+        val command = taskRequestMapper.toUpdateTaskCommand(request)
         val task = taskUpdater.updateTask(id, command)
-        val response = taskMapper.toTaskResponse(task)
+        val response = taskResponseMapper.toTaskResponse(task)
         return ResponseEntity.ok(response)
     }
 

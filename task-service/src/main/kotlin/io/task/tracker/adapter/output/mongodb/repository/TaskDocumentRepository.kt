@@ -6,7 +6,7 @@ import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import java.util.*
 
 interface TaskDocumentRepository : CoroutineCrudRepository<TaskDocument, UUID> {
-    fun findAllByMetadataParentIdIsNull(): Flow<TaskDocument>
+    fun findAllByMetadataNamespaceIdAndMetadataParentIdIsNull(namespaceId: UUID): Flow<TaskDocument>
 
     fun findAllByMetadataParentId(parentId: UUID): Flow<TaskDocument>
 }

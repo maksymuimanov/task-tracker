@@ -1,9 +1,5 @@
 package io.task.tracker.mapper
 
-import io.task.tracker.adapter.input.rest.CreateTaskRequest
-import io.task.tracker.adapter.input.rest.TaskResponse
-import io.task.tracker.adapter.input.rest.UpdateTaskRequest
-import io.task.tracker.adapter.output.mongodb.document.TaskDocument
 import io.task.tracker.core.port.input.CreateTaskCommand
 import io.task.tracker.core.port.input.UpdateTaskCommand
 import io.task.tracker.domain.Task
@@ -23,10 +19,6 @@ import java.util.*
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 interface TaskMapper {
-    fun toCreateTaskCommand(request: CreateTaskRequest): CreateTaskCommand
-
-    fun toUpdateTaskCommand(request: UpdateTaskRequest): UpdateTaskCommand
-
     @Mapping(target = "id", source = "id")
     @Mapping(target = "info", source = "command")
     @Mapping(target = "state", source = "command")
@@ -47,10 +39,6 @@ interface TaskMapper {
     @Mapping(target = "createdAt", source = "createdAt")
     @Mapping(target = "updatedAt", source = "createdAt")
     fun toTaskMetadata(command: CreateTaskCommand, createdAt: Instant): TaskMetadata
-
-    fun toTask(taskDocument: TaskDocument): Task
-
-    fun toTaskDocument(task: Task): TaskDocument
 
     fun updateTask(@MappingTarget task: Task, command: UpdateTaskCommand, updatedAt: Instant): Task {
         updateTaskInfo(task.info, command)
@@ -73,6 +61,4 @@ interface TaskMapper {
     @Mapping(target = "updatedAt", source = "updatedAt")
     @Mapping(target = "createdAt", ignore = true)
     fun updateTaskMetadata(@MappingTarget metadata: TaskMetadata, command: UpdateTaskCommand, updatedAt: Instant): TaskMetadata
-
-    fun toTaskResponse(task: Task): TaskResponse
 }
